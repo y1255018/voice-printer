@@ -4,11 +4,12 @@ import codecs
 import serial
 from datetime import datetime
 import os
-
+import subprocess
+import time
 
 class Order:
     def __init__(self):
-        self.file = 'order.txt'
+        self.file = '/home/pi/src/voice-printer/order.txt'
         self.number = 0
         self.status = 0
         self.f_order = ""
@@ -19,9 +20,14 @@ class Order:
         self.status = 1
 
     def closeOrder(self):
-        self.f_order.close()
-        self.printOrder()
-        self.status = 0
+        if self.status == 1:
+          self.f_order.close()
+
+          s = os.path.getsize(self.file)
+          if s>0:
+            self.printOrder()
+
+          self.status = 0
 
     def writeOrder(self, text):
         if self.status == 1:
@@ -41,6 +47,7 @@ class Order:
             ser.write("\r")
         
         ser.write("-----------------------------\r")
+        #ser.write("\r\r\r\r\r\r");  # Line Feed
         self.number += 1
 
 order = Order()
@@ -50,6 +57,9 @@ def main():
   host = '127.0.0.1'
   port = 10500
 
+  p = subprocess.Popen(["/home/pi/src/voice-printer/julius-start.sh"], stdout=subprocess.PIPE, shell=True) # start julius
+  pid = str(p.stdout.read().decode('utf-8')) # get julius process ID
+
   client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   client.connect((host, port))
   data=''
@@ -57,21 +67,21 @@ def main():
     while(1):
       if '</RECOGOUT>\n.' in data:
         text=''
-        score=''
+        cm=''
         for line in data.split('\n'):
           #print(line)
           index = line.find('WORD="')
           index2 = line.find('CM="')
           if index != -1 and index2!=-1:
             text = line[index+6:line.find('"',index+6)]
-            score = line[index2+4:line.find('"',index2+4)]
+            cm = line[index2+4:line.find('"',index2+4)]
+            score = float(cm)
             
-            print(text) 
-            print("score = " + score)  
+            print(text + " score=" + cm)  
 
             if score>=1.0:
               if text == '注文開始':
-                  os.system("aplay '/home/pi/test.wav'")
+                  os.system("aplay '/home/pi/src/voice-printer/start.wav'")
                   order.openOrder()
               elif text == '注文終了':
                   order.closeOrder()
@@ -84,6 +94,8 @@ def main():
 
   except KeyboardInterrupt:
     print("KeyboardInterrupt occured.")
+    p.kill()
+    subprocess.call(["kill " + pid], shell=True)  # kill julius
     client.close()
 
 if __name__ == "__main__":
