@@ -10,7 +10,7 @@ Check my [blog](https://idis.dev/blog/voice-printer/)
 
 * [Julius](https://julius.osdn.jp/en_index.php) - For Voice Recognition. Use ver4.5
 
-you can install by this script 
+You can install this command
 ```bash
 sh install.sh
 ```
@@ -24,6 +24,14 @@ sh install.sh
 ### Run main
 ```bash
 python main.py
+```
+
+### make own dictation
+you need dictation to increase voice recognition rate.
+1. Edit mydictation/word.yomi
+2. Convert to dictation 'word.dic'
+```bash
+sh makedict.sh
 ```
 
 ### test mike and speaker
