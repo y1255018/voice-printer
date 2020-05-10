@@ -2,37 +2,36 @@
 voice recognition and print by thermal printer
 
 ## Features
-Check this blog
-https://idis.dev/blog/voice-printer/
-
+Check my [blog](https://idis.dev/blog/voice-printer/)
 
 ## Getting Started
 
 ### Prerequire
 
-I use Open Source Library
-* [Julius](https://julius.osdn.jp/en_index.php) - Voice Recognition
+* [Julius](https://julius.osdn.jp/en_index.php) - For Voice Recognition. Use ver4.5
+
+you can install by this script 
+```bash
+sh install.sh
+```
 
 ### Set the pin where the printer is connected
-[Circuit] https://easyeda.com/minmax/voice-printer
+[Circuit](https://easyeda.com/minmax/voice-printer)
 
-
-#### Include the library in the sketch
-Install 
-
-```c++
-int pin = 2;
-void setup() {
-  EasyBuzzer.setPin(pin);
-};  
 
 ## Uses
 
-### Regular Beep
+### Run main
+```bash
+python main.py
+```
+
+### test mike and speaker
+```bash
+python record_voice.py
+```
 
 ## What to expect in next updates
 
-- [ ] Support for multiple instances of `EasyBuzzer` Class, making possible to have more than one Buzzer.
-- [ ] Shortcut functions to predefined sounds like; success, error and warning.
-
-
+- [ ] make interface curcuit boad between raspberry pi and printer.
+- [ ] make case to fix position of printer
