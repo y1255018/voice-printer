@@ -1,5 +1,6 @@
 # voice-printer
 voice recognition and print by thermal printer
+
 ![demo](https://user-images.githubusercontent.com/319850/81499823-2dc38b00-9309-11ea-9465-19f0f2a2a8d5.gif)
 
 ## Features
