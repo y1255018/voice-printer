@@ -14,7 +14,9 @@ Check my [blog](https://idis.dev/blog/voice-printer/)
 
 You can install this command
 ```bash
-sh install.sh
+$ git clone https://github.com/y1255018/voice-printer.git
+$ git submodule update --init --recursive
+$ sh install.sh
 ```
 
 ### Set the pin where the printer is connected
@@ -25,7 +27,7 @@ sh install.sh
 
 ### Run main
 ```bash
-python main.py
+$ python main.py
 ```
 
 ### make own dictation
@@ -33,12 +35,12 @@ you need dictation to increase voice recognition rate.
 1. Edit mydictation/word.yomi
 2. Convert to dictation 'word.dic'
 ```bash
-sh makedict.sh
+$ sh makedict.sh
 ```
 
 ### test mike and speaker
 ```bash
-python record_voice.py
+$ python record_voice.py
 ```
 
 ## What to expect in next updates
